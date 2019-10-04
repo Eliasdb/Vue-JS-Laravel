@@ -19,8 +19,9 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-// Vue.component('todo-list', require('./components/ToDoList.vue').default);
-Vue.component('parking-table', require('./components/ParkingTable.vue').default);
+Vue.component('infinite-contacts', require('./components/InfiniteContacts.vue'));
+Vue.component('todo-list', require('./components/ToDoList.vue'));
+Vue.component('parking-table', require('./components/ParkingTable.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
