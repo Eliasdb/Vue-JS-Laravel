@@ -4,7 +4,7 @@
 Route::view('contacts', 'contacts');
 
 // raw data contacts
-Route::get('contactdata', function() {
+Route::get('contactsdata', function() {
     return json_decode(file_get_contents(storage_path('contacts_2000.json')));
 });
 

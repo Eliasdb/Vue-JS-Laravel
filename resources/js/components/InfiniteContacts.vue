@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <input type="text" placeholder="Enter first or last name" style="width: 160px" v-model="searchQuery"> <br><br>
+    <div><br>
+        <input type="text" placeholder="Enter first or last name" v-model="searchQuery"> <br><br>
 
         <div>
             <table>
@@ -65,9 +65,8 @@
             },
         },
         created() { // make an ajax request to our server and render the response, the endpoint I want to hit is /contacts
-            axios.get('/contacts').then(response => this.contacts = response.data);
+            axios.get('/contactsdata').then(response => this.contacts = response.data);
             // vue resource -> this.$http does a similar thing
-
         }
     }
 </script>

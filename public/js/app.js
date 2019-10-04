@@ -1932,7 +1932,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this2 = this;
 
     // make an ajax request to our server and render the response, the endpoint I want to hit is /contacts
-    axios.get('/contacts').then(function (response) {
+    axios.get('/contactsdata').then(function (response) {
       return _this2.contacts = response.data;
     }); // vue resource -> this.$http does a similar thing
   }
@@ -19695,6 +19695,8 @@ var render = function() {
   return _c(
     "div",
     [
+      _c("br"),
+      _vm._v(" "),
       _c("input", {
         directives: [
           {
@@ -19704,7 +19706,6 @@ var render = function() {
             expression: "searchQuery"
           }
         ],
-        staticStyle: { width: "160px" },
         attrs: { type: "text", placeholder: "Enter first or last name" },
         domProps: { value: _vm.searchQuery },
         on: {
