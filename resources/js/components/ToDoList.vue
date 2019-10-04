@@ -58,20 +58,17 @@
                     this.title = ''
                 }
             },
-
             deleteTodo(todo) {
                 this.todos.splice(
                     this.todos.indexOf(todo), 1
                 );
             }
         },
-
         watch: {
             todos() {
                 localStorage.setItem('todo-storage', JSON.stringify(this.todos)); // setting in local storage when the array changes
             }
         }
-
     }
 </script>
 

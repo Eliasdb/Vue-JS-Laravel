@@ -1,6 +1,7 @@
 <template>
     <div>
         <input type="text" placeholder="Enter first or last name" style="width: 160px" v-model="searchQuery"> <br><br>
+
         <div>
             <table>
                 <thead>
@@ -27,11 +28,7 @@
 </template>
 
 <script>
-
     import InfiniteLoading from 'vue-infinite-loading';
-
-    const api = '//hn.algolia.com/api/v1/search_by_date?tags=story';
-
 
     export default {
         data() {
@@ -49,17 +46,14 @@
                     .slice(0, this.end);
             }
         },
-
         watch: {
             searchQuery: function () {
                 this.end = this.count;
             },
         },
-
         components: {
             InfiniteLoading
         },
-
         methods: {
             infiniteHandler($state) {
                 if (this.filteredContacts.length < this.contacts.length) {
@@ -70,13 +64,10 @@
                 }
             },
         },
-// lifecycle hooks
         created() { // make an ajax request to our server and render the response, the endpoint I want to hit is /contacts
-
-            axios.get('/contacts').then(response => this.contacts = response.data); // gets data from contacts, puts it in array contacts
+            axios.get('/contacts').then(response => this.contacts = response.data);
             // vue resource -> this.$http does a similar thing
 
         }
     }
-
 </script>
