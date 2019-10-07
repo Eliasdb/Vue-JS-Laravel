@@ -1,5 +1,7 @@
 <template>
-    <table class="table table-hovered">
+    <div>
+
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>Name</th>
@@ -18,22 +20,50 @@
         </tr>
         </tbody>
     </table>
-</template>
 
+        <i v-if="spinner" class="fas fa-spinner fa-spin"></i>
+
+    </div>
+
+</template>
+<style scoped>
+    /* screen is 500px or less */
+    @media screen and (max-width: 500px) {
+        .table {
+            width: 100%;
+        }
+    }
+    /* screen is 500px or wider */
+    @media screen and (min-width: 500px) {
+        .table {
+            border: 1px solid black;
+            margin: auto;
+            width: 500px;
+        }
+    }
+
+</style>
 <script>
     export default {
         data() {
             return {
                 parking: [],
-                refreshRate: 1000
+                refreshRate: 2000,
+                spinner: true
             };
         },
         methods: {
             fetchData() {
-                axios
+                this.spinner = true;
+                 axios
                     .get('https://datatank.stad.gent/4/mobiliteit/bezettingparkingsrealtime.json')
-                    .then(response => this.parking = response.data)
-                    .finally(() => setTimeout(this.fetchData, this.refreshRate))
+                       .then(response => {
+                        this.parking = response.data;
+                    })
+                    .finally(() => {
+                        setTimeout(this.fetchData, this.refreshRate);
+                        this.spinner = false;
+                    });
             },
         },
         created() {

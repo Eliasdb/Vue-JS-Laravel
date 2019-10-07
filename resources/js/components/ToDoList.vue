@@ -4,13 +4,13 @@
             <h2>TO DO</h2>
 
             <form @submit.prevent="addTodo">
-                <br>
-                <input type="text" placeholder="Title" v-model="title" class="form-control" style="width: 200px">
-                <br>
-                <input type="text" placeholder="Message" v-model="message" class="form-control" style="width: 200px">
-                <br>
-                <input type="submit" value="Add" class="btn btn-primary" style="width:100px">
-            </form>
+            <br>
+            <input type="text" placeholder="Title" v-model="title" class="form-control" style="width: 200px">
+            <br>
+            <input type="text" placeholder="Message" v-model="message" class="form-control" style="width: 200px">
+            <br>
+            <input type="submit" value="Add" class="btn btn-primary" style="width:100px">
+        </form>
             <br>
 
             <table class="table">

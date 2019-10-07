@@ -14,5 +14,7 @@ Route::view ('todo', 'todo');
 // 3: parking table
 Route::view('parking', 'parking');
 
+// 4: travel list
+Route::view('travel', 'travel');
 
 /*Route::get('/contacts', 'ContactsController@show'); //*/

@@ -22,6 +22,8 @@ window.Vue = require('vue');
 Vue.component('infinite-contacts', require('./components/InfiniteContacts.vue').default);
 Vue.component('todo-list', require('./components/ToDoList.vue').default);
 Vue.component('parking-table', require('./components/ParkingTable.vue').default);
+Vue.component('travel-list', require('./components/TravelList.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
