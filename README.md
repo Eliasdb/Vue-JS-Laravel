@@ -10,3 +10,4 @@ Todo:
     - 500px of groter -> table width = 500px
 - spinner icoontje tijdens het laden draait het, anders niet draaien. Zie favicons of glypicons
    
+valet secure -> geolocation api shit
