@@ -2152,32 +2152,78 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
+    var items = JSON.parse(localStorage.getItem('travel-items') || '[]');
+
+    if (!Array.isArray(items)) {
+      items = [];
+    }
+
+    var locations = JSON.parse(localStorage.getItem('current-location') || '[]');
+
+    if (!Array.isArray(items)) {
+      locations = [];
+    }
+
     return {
       date: '',
+      destination: '',
+      items: items,
+      // = items: items
       location: '',
-      items: JSON.parse(localStorage.getItem('travel-items') || '[]')
+      locations: locations,
+      distance: []
     };
   },
   methods: {
     addItem: function addItem() {
       if (this.items.push({
         date: this.date,
-        location: this.location
+        destination: this.destination
       })) {
         this.date = '';
+        this.destination = '';
+      }
+    },
+    deleteItem: function deleteItem() {
+      this.items.splice(this.items.indexOf(), 1);
+    },
+    addLocation: function addLocation() {
+      if (this.locations.push({
+        location: this.location
+      })) {
         this.location = '';
       }
     },
-    deleteItem: function deleteItem(item) {
-      this.items.splice(this.items.indexOf(item), 1);
-    }
+    showDistance: function showDistance() {}
   },
   watch: {
     items: function items() {
       localStorage.setItem('travel-items', JSON.stringify(this.items));
+    },
+    locations: function locations() {
+      localStorage.setItem('current-location', JSON.stringify(this.locations));
     }
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get('https://nl.afstand.org/route.json?stops=x|y').then(function (response) {
+      _this.distance = response.data;
+    });
   }
 });
 
@@ -20798,6 +20844,7 @@ var render = function() {
     _c(
       "form",
       {
+        staticStyle: { "margin-left": "5px" },
         on: {
           submit: function($event) {
             $event.preventDefault()
@@ -20818,7 +20865,7 @@ var render = function() {
             }
           ],
           staticStyle: { width: "200px" },
-          attrs: { type: "date" },
+          attrs: { type: "text", placeholder: "Date" },
           domProps: { value: _vm.date },
           on: {
             input: function($event) {
@@ -20838,19 +20885,19 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.location,
-              expression: "location"
+              value: _vm.destination,
+              expression: "destination"
             }
           ],
           staticStyle: { width: "200px" },
-          attrs: { type: "text", placeholder: "Location" },
-          domProps: { value: _vm.location },
+          attrs: { type: "text", placeholder: "Travel destination" },
+          domProps: { value: _vm.destination },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.location = $event.target.value
+              _vm.destination = $event.target.value
             }
           }
         }),
@@ -20869,6 +20916,60 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticStyle: { "margin-left": "5px" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.addLocation($event)
+          }
+        }
+      },
+      [
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.location,
+              expression: "location"
+            }
+          ],
+          staticStyle: { width: "200px" },
+          attrs: { type: "text", placeholder: "Current location" },
+          domProps: { value: _vm.location },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.location = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("br"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "btn btn-primary",
+          staticStyle: { width: "200px" },
+          attrs: { type: "submit", value: "Save" }
+        }),
+        _vm._v(" "),
+        _c("br"),
+        _c("br")
+      ]
+    ),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
     _c("div", [
       _c("table", { staticClass: "table table-hover" }, [
         _vm._m(0),
@@ -20879,7 +20980,7 @@ var render = function() {
             return _c("tr", [
               _c("td", { domProps: { textContent: _vm._s(x.date) } }),
               _vm._v(" "),
-              _c("td", { domProps: { textContent: _vm._s(x.location) } }),
+              _c("td", { domProps: { textContent: _vm._s(x.destination) } }),
               _vm._v(" "),
               _c("td"),
               _vm._v(" "),
@@ -20890,14 +20991,25 @@ var render = function() {
                     staticStyle: { border: "none", background: "none" },
                     on: {
                       click: function($event) {
-                        return _vm.deleteItem(_vm.item)
+                        return _vm.deleteItem()
                       }
                     }
                   },
                   [_c("i", { staticClass: "fas fa-calendar-times" })]
                 ),
                 _vm._v(" "),
-                _vm._m(1, true)
+                _c(
+                  "button",
+                  {
+                    staticStyle: { border: "none", background: "none" },
+                    on: {
+                      click: function($event) {
+                        return _vm.showDistance()
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-calculator" })]
+                )
               ])
             ])
           }),
@@ -20916,21 +21028,11 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("Date")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Location")]),
+        _c("th", [_vm._v("Destination")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Distance")])
+        _c("th", { attrs: { colspan: "2" } }, [_vm._v("Distance")])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticStyle: { border: "none", background: "none" } },
-      [_c("i", { staticClass: "fas fa-calculator" })]
-    )
   }
 ]
 render._withStripped = true
