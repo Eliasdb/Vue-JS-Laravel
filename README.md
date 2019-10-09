@@ -11,3 +11,21 @@ Todo:
 - spinner icoontje tijdens het laden draait het, anders niet draaien. Zie favicons of glypicons
    
 valet secure -> geolocation api shit
+
+
+
+    calculateDistance(from, to) : promise
+    const afstand = await calculateDistance(gent, brussel)
+    afstand = 50
+    addItem -> uitbreiden
+    {
+    date: this.date,
+    destination: this.destianction
+    distance: await this.calculateDistance(from, this.destination)
+    }
+
+    created(){
+    console.log(
+    await this.calculateDistance(‘gent’, ‘brussel’)
+    )
+    }
