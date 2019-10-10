@@ -20,4 +20,7 @@ Responsiveness, methods, promises, fetching data from API.
 Basic todo app, adding/deleting methods, watch properties, storing in localstorage.
 
 **TravelList**
+
 *Skills learned:*
+
+Async/await, promises, Bootstrap, working with Laravel
